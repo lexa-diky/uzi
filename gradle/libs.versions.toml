@@ -1,0 +1,19 @@
+[versions]
+kotlinx-ktor = "2.3.5"
+kotlinx-serialization = "1.6.0"
+
+[libraries]
+
+# KotlinX
+kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+kotlin-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
+
+# Ktor server
+ktor-core = { module = "io.ktor:ktor-server-core", version.ref = "kotlinx-ktor" }
+ktor-engine-netty = { module = "io.ktor:ktor-server-netty", version.ref = "kotlinx-ktor" }
+
+# Ktor client
+ktor-client-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "kotlinx-ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "kotlinx-ktor" }
+ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "kotlinx-ktor" }
+ktor-client = { module = "io.ktor:ktor-client-core", version.ref = "kotlinx-ktor" }
