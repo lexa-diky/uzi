@@ -3,10 +3,10 @@ package io.github.lexadiky.uzi.engine.task.builder
 import io.github.lexadiky.uzi.engine.task.ParallelTask
 import io.github.lexadiky.uzi.engine.task.UziTask
 
-class ParallelUziTaskBuilder : UziTaskBuilder {
+class ParallelUziTaskBuilder : UziTaskBuilder, ChildCollectorTaskBuilder {
     private val children: ArrayList<UziTask> = ArrayList()
 
-    fun child(task: UziTask) {
+    override fun child(task: UziTask) {
         children += task
     }
 
