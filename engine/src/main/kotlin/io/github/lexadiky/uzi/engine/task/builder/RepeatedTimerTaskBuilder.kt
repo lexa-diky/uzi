@@ -1,9 +1,9 @@
 package io.github.lexadiky.uzi.engine.task.builder
 
-import io.github.lexadiky.uzi.engine.util.Frequency
+import io.github.lexadiky.uzi.engine.util.DurationFrequency
 
 abstract class RepeatedTimerTaskBuilder : UziTaskBuilder {
-    protected var frequency: Frequency? = null
+    protected var frequency: DurationFrequency? = null
     protected var repeats: UInt = 0u
 
     fun frequency(build: FrequencyBuilder.() -> Unit) {
