@@ -8,24 +8,10 @@ Minimalistic distributed load test system
 import kotlin.time.Duration.Companion.milliseconds
 
 val MyExecutionPlan = uzi {
-    parallel {
-        repeat(10) {
-            http {
-                frequency {
-                    normal(mean = 1.seconds, deviation = 100.milliseconds)
-                }
-
-                request {
-                    uri = "https://google.com"
-                }
-            }
-        }
-
+    repeat(10) {
         http {
-            frequency {
-monothone(every = 500.milliseconds)
-            }
-            
+            frequency { normal(mean = 1.seconds, deviation = 100.milliseconds) }
+
             request {
                 uri = "https://google.com"
             }
@@ -33,9 +19,7 @@ monothone(every = 500.milliseconds)
     }
 
     http {
-        frequency {
-            once() 
-        }
+        frequency { monothone(every = 500.milliseconds) }
 
         request {
             uri = "https://google.com"
