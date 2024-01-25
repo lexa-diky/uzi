@@ -25,7 +25,7 @@ plugins {
 }
 
 includeBuild("./included-build")
-include(":agent", ":controller", "engine")
+include(":agent", ":controller", "engine", "agent-contract")
 
 rootProject.name = "uzi"
 

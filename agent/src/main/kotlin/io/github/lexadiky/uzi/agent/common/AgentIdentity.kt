@@ -1,4 +1,4 @@
-package io.github.lexadiky.uzi.agent
+package io.github.lexadiky.uzi.agent.common
 
 import java.util.UUID
 
