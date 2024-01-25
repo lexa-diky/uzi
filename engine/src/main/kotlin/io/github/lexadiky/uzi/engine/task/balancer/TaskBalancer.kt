@@ -15,10 +15,11 @@ import io.github.lexadiky.uzi.engine.task.UziTask
 interface TaskBalancer {
 
     /**
-     * @param task [UziTask] to be split into subtasks
-     * @return [List] of split [UziTask]. If no split possible will return list with single input [task]
+     * @param task [UziTask] to be split into subtasks.
+     * @param partitions expected size returned [List], may (and likely be) differ from an actual result.
+     * @return [List] of split [UziTask]. If no split possible will return list with single input [task].
      */
-    fun balance(task: UziTask): List<UziTask>
+    fun balance(task: UziTask, partitions: Int): List<UziTask>
 
     companion object {
 

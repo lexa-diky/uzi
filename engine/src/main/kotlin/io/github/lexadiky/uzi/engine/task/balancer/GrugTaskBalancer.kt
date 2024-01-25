@@ -8,7 +8,7 @@ import io.github.lexadiky.uzi.engine.task.UziTask
  */
 internal class GrugTaskBalancer : TaskBalancer {
 
-    override fun balance(task: UziTask): List<UziTask> {
+    override fun balance(task: UziTask, partitions: Int): List<UziTask> {
         if (task is ParallelTask) {
             return task.children
         }

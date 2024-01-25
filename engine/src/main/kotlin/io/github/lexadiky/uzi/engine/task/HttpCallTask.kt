@@ -5,5 +5,5 @@ import java.net.URI
 data class HttpCallTask(
     val uri: URI,
     val method: String,
-    val headers: Map<String, String>
+    val headers: Map<String, List<String>>
 ): UziTask
