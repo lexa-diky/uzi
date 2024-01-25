@@ -1,15 +1,19 @@
 package io.github.lexadiky.uzi.agent.server.session
 
+import io.github.lexadiky.uzi.agent.common.AgentIdentity
 import io.github.lexadiky.uzi.agent.contract.session.event.SessionEvent
 import io.github.lexadiky.uzi.agent.contract.session.event.SessionInitializationRequest
 import io.github.lexadiky.uzi.agent.di.di
 import io.ktor.server.websocket.DefaultWebSocketServerSession
 import io.ktor.server.websocket.application
 import io.ktor.websocket.Frame
+import java.util.UUID
 
 class WebsocketSessionController(session: DefaultWebSocketServerSession) {
     private val json = session.application.di.json
     private val sessionProcessor = session.application.di.sessionProcessor
+    private val identity = AgentIdentity.create()
+    private val sessionUuid = UUID.fromString(session.call.parameters["uuid"])
 
     suspend fun onNextFrame(frame: Frame) {
         val isDataFrame = frame is Frame.Binary || frame is Frame.Text
