@@ -1,20 +1,30 @@
 package io.github.lexadiky.uzi.engine.util
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlin.time.Duration
 
+@Serializable
 sealed interface DurationFrequency {
 
     fun split(parts: Int): DurationFrequency
 }
 
-data class MonotoneFrequency(val every: Duration): DurationFrequency {
+@[Serializable SerialName("monotone")]
+data class MonotoneFrequency(
+    @SerialName("every") val every: Duration
+) : DurationFrequency {
 
     override fun split(parts: Int): DurationFrequency {
         return MonotoneFrequency(every * parts)
     }
 }
 
-data class NormalFrequency(val mean: Duration, val stdDeviation: Duration): DurationFrequency {
+@[Serializable SerialName("normal")]
+data class NormalFrequency(
+    @SerialName("mean") val mean: Duration,
+    @SerialName("stdDeviation") val stdDeviation: Duration
+) : DurationFrequency {
 
     override fun split(parts: Int): DurationFrequency {
         // TODO check algorithm
