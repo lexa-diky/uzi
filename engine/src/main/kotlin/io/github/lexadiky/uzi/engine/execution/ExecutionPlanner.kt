@@ -5,7 +5,7 @@ import io.github.lexadiky.uzi.engine.task.UziTask
 /**
  * Converter from static [UziTask] to dynamic [ExecutionPlan]
  */
-interface ExecutionPlanner {
+interface ExecutionPlanner<Task: UziTask> {
 
-    fun plan(task: UziTask): ExecutionPlan
+    fun plan(task: Task): ExecutionPlan
 }
