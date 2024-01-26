@@ -8,7 +8,7 @@ import io.ktor.client.request.request
 import io.ktor.client.request.url
 import io.ktor.http.HttpMethod
 
-class HttpExecutionPlan(
+internal class HttpExecutionPlan(
     private val task: HttpCallTask,
     private val client: HttpClient
 ) : ExecutionPlan {
