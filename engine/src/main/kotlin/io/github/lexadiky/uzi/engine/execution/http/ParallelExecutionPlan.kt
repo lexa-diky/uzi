@@ -9,15 +9,13 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 
 class ParallelExecutionPlan(
-    private val planner: ExecutionPlanner<UziTask>,
-    private val task: ParallelTask
+    private val subPlans: List<ExecutionPlan>
 ) : ExecutionPlan {
 
     override suspend fun execute() {
         coroutineScope {
-            task.children.map {
-                async { planner.plan(it).execute() }
-            }.awaitAll()
+            subPlans.map { plan -> async { plan.execute() } }
+                .awaitAll()
         }
     }
 }
