@@ -1,6 +1,8 @@
 package io.github.lexadiky.uzi.engine.execution.impl
 
+import io.github.lexadiky.uzi.engine.execution.ExecutionContext
 import io.github.lexadiky.uzi.engine.execution.ExecutionPlan
+import io.github.lexadiky.uzi.engine.execution.logged
 import io.github.lexadiky.uzi.engine.util.DurationFrequency
 import io.github.lexadiky.uzi.engine.util.MonotoneFrequency
 import io.github.lexadiky.uzi.engine.util.NormalFrequency
@@ -15,10 +17,10 @@ class RepeatedTimerExecutionPlan(
     private val random: Random
 ) : ExecutionPlan {
 
-    override suspend fun execute() {
+    override suspend fun execute(context: ExecutionContext) = context.logged(this) {
         repeat(repeats.toInt()) {
             delayFrequency()
-            subPlan.execute()
+            subPlan.execute(context.branch())
         }
     }
 

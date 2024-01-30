@@ -5,5 +5,5 @@ package io.github.lexadiky.uzi.engine.execution
  */
 interface ExecutionPlan {
 
-    suspend fun execute()
+    suspend fun execute(context: ExecutionContext)
 }
