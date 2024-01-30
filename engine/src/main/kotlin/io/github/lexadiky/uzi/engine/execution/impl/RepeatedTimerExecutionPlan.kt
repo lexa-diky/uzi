@@ -1,4 +1,4 @@
-package io.github.lexadiky.uzi.engine.execution.http
+package io.github.lexadiky.uzi.engine.execution.impl
 
 import io.github.lexadiky.uzi.engine.execution.ExecutionPlan
 import io.github.lexadiky.uzi.engine.util.DurationFrequency

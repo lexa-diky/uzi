@@ -1,7 +1,6 @@
-package io.github.lexadiky.uzi.engine.execution.http
+package io.github.lexadiky.uzi.engine.execution.impl
 
 import io.github.lexadiky.uzi.engine.execution.ExecutionPlan
-import io.github.lexadiky.uzi.engine.task.HttpCallTask
 import io.ktor.client.HttpClient
 import io.ktor.client.request.headers
 import io.ktor.client.request.request
