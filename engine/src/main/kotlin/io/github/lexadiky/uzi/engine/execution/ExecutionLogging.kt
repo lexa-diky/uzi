@@ -5,7 +5,7 @@ import kotlin.time.measureTime
 
 suspend fun ExecutionContext.trace(caller: Any, runnable: suspend () -> Unit) {
     val logger = LoggerFactory.getLogger(caller::class.java.simpleName)
-    logger.debug("running ${this.serialId}")
+    logger.trace("running ${this.serialId}")
     val time = measureTime { runnable() }
-    logger.debug("finished ${this.serialId} in $time")
+    logger.trace("finished ${this.serialId} in $time")
 }
