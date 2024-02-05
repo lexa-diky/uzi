@@ -12,9 +12,14 @@ class ParallelExecutionPlan(
 ) : ExecutionPlan {
 
     override suspend fun execute(context: ExecutionContext) = context.trace(this) {
-        coroutineScope {
-            subPlans.map { plan -> async { plan.execute(context.branch()) } }
-                .awaitAll()
+        context.branch("parallel") { context ->
+            coroutineScope {
+                subPlans.map { plan ->
+                    async {
+                        context.branch("parallel-node", plan::execute)
+                    }
+                }.awaitAll()
+            }
         }
     }
 }

@@ -20,7 +20,7 @@ class RepeatedTimerExecutionPlan(
     override suspend fun execute(context: ExecutionContext) = context.trace(this) {
         repeat(repeats.toInt()) {
             delayFrequency()
-            subPlan.execute(context.branch())
+            context.branch("repeated-timer", subPlan::execute)
         }
     }
 

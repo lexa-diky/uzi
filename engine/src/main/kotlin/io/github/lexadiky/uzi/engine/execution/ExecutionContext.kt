@@ -8,8 +8,9 @@ interface ExecutionContext {
     val serialId: Long
     val sessionId: UUID
     val uuid: UUID
+    val measurements: List<Measurement>
 
-    fun branch(): ExecutionContext
+    suspend fun branch(typeId: String, scope: suspend (ExecutionContext) -> Unit): ExecutionContext
 
     fun measure(measurement: Measurement)
 
@@ -25,14 +26,27 @@ private data class ExecutionContextImpl(
     override val serialId: Long = atomicCounter.getAndIncrement(),
     override val uuid: UUID = UUID.randomUUID(),
     override val sessionId: UUID,
-    private var measurements: MutableList<Measurement> = ArrayList(),
 ) : ExecutionContext {
+    override var measurements: MutableList<Measurement> = ArrayList()
+        private set
 
-    override fun branch(): ExecutionContext {
-        return copy(
+    override suspend fun branch(typeId: String, scope: suspend (ExecutionContext) -> Unit): ExecutionContext {
+        val childContext = copy(
             serialId = atomicCounter.getAndIncrement(),
             uuid = UUID.randomUUID()
         )
+
+        scope(childContext)
+
+        measure(
+            Measurement(
+                typeId = typeId,
+                tag = "${typeId}_$serialId",
+                value = Measurement.Value.Group(childContext.measurements)
+            )
+        )
+
+        return this
     }
 
     override fun measure(measurement: Measurement) {
