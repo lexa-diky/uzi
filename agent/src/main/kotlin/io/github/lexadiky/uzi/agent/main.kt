@@ -47,11 +47,13 @@ private fun printMeasurements(level: Int, measurement: Measurement) {
     }
 }
 
+private const val COMPRESSION_FLAG = false
 private fun printGroupValue(value: Measurement.Value.Group, level: Int) {
-    when {
-        (value.nodes.size == 1 && value.nodes.first().value is Measurement.Value.Group) ->
-            printCompressedGroupValue(value, level)
-        else -> printUncompressedGroupValue(value, level)
+
+    if (value.nodes.size == 1 && COMPRESSION_FLAG) {
+        printCompressedGroupValue(value, level)
+    } else {
+        printUncompressedGroupValue(value, level)
     }
 }
 
@@ -59,7 +61,6 @@ private fun printCompressedGroupValue(value: Measurement.Value.Group, level: Int
     print(" :>")
     printMeasurements(level, value.nodes.first())
 }
-
 
 private fun printUncompressedGroupValue(value: Measurement.Value.Group, level: Int) {
     println(" : { ")
