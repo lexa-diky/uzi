@@ -37,19 +37,23 @@ fun main() {
 
 private fun printMeasurements(level: Int, measurement: Measurement) {
     print(" ".repeat(level))
-    print("${measurement.typeId}/${measurement.tag}")
 
+    if (measurement.typeId != measurement.tag) {
+        print("${measurement.typeId}/${measurement.tag}")
+    } else {
+        print(measurement.typeId)
+    }
 
     when (val value = measurement.value) {
         is Measurement.Value.Duration -> println(" : ${value.value}")
         is Measurement.Value.Scalar -> println(" : ${value.value}")
+        is Measurement.Value.Fact -> println(" : ${value.value}")
         is Measurement.Value.Group -> printGroupValue(value, level)
     }
 }
 
-private const val COMPRESSION_FLAG = false
+private const val COMPRESSION_FLAG = true
 private fun printGroupValue(value: Measurement.Value.Group, level: Int) {
-
     if (value.nodes.size == 1 && COMPRESSION_FLAG) {
         printCompressedGroupValue(value, level)
     } else {

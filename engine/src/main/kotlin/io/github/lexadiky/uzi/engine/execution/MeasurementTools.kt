@@ -12,3 +12,7 @@ suspend fun <T> ExecutionContext.measureTime(typeId: String, tag: String = typeI
 
     return res
 }
+
+fun ExecutionContext.measureFact(typeId: String, fact: String) {
+    measure(Measurement(typeId, typeId, Measurement.Value.Fact(fact)))
+}

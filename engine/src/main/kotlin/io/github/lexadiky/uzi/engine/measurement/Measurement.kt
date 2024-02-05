@@ -12,6 +12,8 @@ data class Measurement(
 
         data class Scalar(val value: Long) : Value
 
+        data class Fact(val value: String): Value
+
         data class Group(val nodes: List<Measurement>): Value
     }
 }
