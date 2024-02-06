@@ -7,13 +7,15 @@ import io.github.lexadiky.uzi.agent.di.di
 import io.ktor.server.websocket.DefaultWebSocketServerSession
 import io.ktor.server.websocket.application
 import io.ktor.websocket.Frame
+import kotlinx.coroutines.Job
 import java.util.UUID
 
-class WebsocketSessionController(session: DefaultWebSocketServerSession) {
+class WebsocketSessionController(session: DefaultWebSocketServerSession): AutoCloseable {
     private val json = session.application.di.json
     private val sessionProcessor = session.application.di.sessionProcessor
     private val identity = AgentIdentity.create()
     private val sessionUuid = UUID.fromString(session.call.parameters["uuid"])
+    private val jobs: MutableList<Job> = ArrayList()
 
     suspend fun onNextFrame(frame: Frame) {
         val isDataFrame = frame is Frame.Binary || frame is Frame.Text
@@ -28,8 +30,12 @@ class WebsocketSessionController(session: DefaultWebSocketServerSession) {
     }
 
     private suspend fun onEvent(event: SessionEvent) {
-        when(event) {
-            is SessionInitializationRequest -> sessionProcessor.enqueue(event.task)
+        jobs += when(event) {
+            is SessionInitializationRequest -> sessionProcessor.enqueue(sessionUuid, event.task)
         }
+    }
+
+    override fun close() {
+        jobs.forEach { it.cancel() }
     }
 }

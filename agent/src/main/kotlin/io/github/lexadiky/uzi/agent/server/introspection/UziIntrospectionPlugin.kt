@@ -26,5 +26,8 @@ val UziIntrospectionPlugin = createApplicationPlugin("Introspection") {
                 }
             }
         }
+        get {
+            call.respond(HttpStatusCode.OK, "uzi-agent: $identity")
+        }
     }
 }
